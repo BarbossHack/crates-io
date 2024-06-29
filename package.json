@@ -1,25 +1,25 @@
 {
-  "name": "crates",
-  "displayName": "crates",
+  "name": "crates-io",
+  "displayName": "crates-io",
   "description": "Helps Rust developers managing dependencies with Cargo.toml.",
-  "version": "0.6.7",
-  "publisher": "serayuzgur",
+  "version": "0.7.0",
+  "publisher": "BarbossHack",
   "author": {
-    "name": "serayuzgur",
-    "email": "serayuzgur@gmail.com"
+    "name": "BarbossHack",
+    "email": "barbossh4ck@protonmail.com"
   },
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
-    "url": "https://github.com/serayuzgur/crates/issues",
-    "email": "serayuzgur@gmail.com"
+    "url": "https://github.com/BarbossHack/crates-io/issues",
+    "email": "barbossh4ck@protonmail.com"
   },
-  "homepage": "https://github.com/serayuzgur/crates/blob/master/README.md",
+  "homepage": "https://github.com/BarbossHack/crates-io/blob/master/README.md",
   "engines": {
     "vscode": "^1.79.1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/serayuzgur/crates.git"
+    "url": "https://github.com/BarbossHack/crates-io.git"
   },
   "icon": "icon.png",
   "keywords": [
@@ -56,7 +56,7 @@
     ],
     "configuration": {
       "type": "object",
-      "title": "Crates",
+      "title": "Crates-io",
       "properties": {
         "crates.listPreReleases": {
           "type": "boolean",

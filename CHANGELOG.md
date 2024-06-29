@@ -2,6 +2,12 @@
 
 All notable changes to the "crates" extension will be documented in this file.
 
+## 0.7.0
+
+- add support for Alternate Registries
+- support toml .version and improve path detection
+- rename to crates-io
+
 ## 0.6.6
 
 - a fix for extension activator [adamtrilling](https://github.com/adamtrilling)
