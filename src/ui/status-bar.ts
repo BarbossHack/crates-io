@@ -44,7 +44,7 @@ StatusBar.setText = (t: Type, text?: string) => {
     window.setStatusBarMessage(`Crates: ${text}`, 2000);
   }
   StatusBar.tooltip = text;
-  StatusBar.command = "crates.retry";
+  StatusBar.command = "crates-io.retry";
 
 
 };

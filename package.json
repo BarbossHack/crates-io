@@ -1,8 +1,8 @@
 {
   "name": "crates-io",
   "displayName": "crates-io",
-  "description": "Helps Rust developers managing dependencies with Cargo.toml.",
-  "version": "0.7.0",
+  "description": "(Fork) Helps Rust developers managing dependencies with Cargo.toml.",
+  "version": "0.7.1",
   "publisher": "BarbossHack",
   "author": {
     "name": "BarbossHack",
@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/BarbossHack/crates-io/blob/master/README.md",
   "engines": {
-    "vscode": "^1.79.1"
+    "vscode": "^1.85.0"
   },
   "repository": {
     "type": "git",
@@ -39,19 +39,19 @@
   "contributes": {
     "commands": [
       {
-        "command": "crates.replaceVersion",
+        "command": "crates-io.replaceVersion",
         "title": "Do not call manually ! Replace Version of the provided dependency",
-        "category": "👆 Crates"
+        "category": "Crates-io"
       },
       {
-        "command": "crates.retry",
+        "command": "crates-io.retry",
         "title": "Retry to fetch Cargo.toml",
-        "category": "👆 Crates"
+        "category": "Crates-io"
       },
       {
-        "command": "crates.updateAll",
+        "command": "crates-io.updateAll",
         "title": "Update All dependencies of the Cargo.toml",
-        "category": "👆 Crates"
+        "category": "Crates-io"
       }
     ],
     "configuration": {
@@ -67,7 +67,7 @@
         "crates.indexServerURL": {
           "type": "string",
           "scope": "resource",
-          "description": "URL of the index server. Default value goes to official sparse index. Alternative values would be onpremise index servers.",
+          "description": "URL of the index server. Default value goes to official sparse index.",
           "default": "https://index.crates.io"
         },
         "crates.errorDecorator": {
@@ -207,21 +207,14 @@
   },
   "types": "vscode",
   "devDependencies": {
-    "@types/glob": "^8.1.0",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "20.3.3",
-    "@types/vscode": "^1.79.1",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
-    "@vscode/test-electron": "^2.3.3",
-    "esbuild": "0.18.11",
-    "eslint": "^8.44.0",
-    "glob": "^10.3.1",
-    "mocha": "^10.2.0",
-    "typescript": "^5.1.6"
+    "@types/node": "^20.14.10",
+    "@types/vscode": "^1.85.0",
+    "@types/semver": "^7.5.8",
+    "esbuild": "^0.23.0",
+    "typescript": "^5.5.3"
   },
   "dependencies": {
     "node-cache": "5.1.2",
-    "semver": "7.5.3"
+    "semver": "7.6.2"
   }
 }

@@ -2,6 +2,13 @@
 
 All notable changes to the "crates" extension will be documented in this file.
 
+## 0.7.1
+
+- remove web.crev.dev reviews
+- update readme descriptions
+- update all dependencies
+- vscode MSV is now ^1.85.0
+
 ## 0.7.0
 
 - add support for Alternate Registries

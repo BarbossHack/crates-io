@@ -16,7 +16,7 @@ export const status = {
 };
 
 export const replaceVersion = commands.registerTextEditorCommand(
-  "crates.replaceVersion",
+  "crates-io.replaceVersion",
   (editor: TextEditor, edit: TextEditorEdit, info: ReplaceItem) => {
     if (editor && info && !status.inProgress) {
       const { fileName } = editor.document;
@@ -37,7 +37,7 @@ export const replaceVersion = commands.registerTextEditorCommand(
 );
 
 export const reload = commands.registerTextEditorCommand(
-  "crates.retry",
+  "crates-io.retry",
   (editor: TextEditor, edit: TextEditorEdit, info) => {
     if (editor) {
       tomlListener(editor);
@@ -46,7 +46,7 @@ export const reload = commands.registerTextEditorCommand(
 );
 
 export const updateAll = commands.registerTextEditorCommand(
-  "crates.updateAll",
+  "crates-io.updateAll",
   (editor: TextEditor, edit: TextEditorEdit) => {
     if (
       editor &&
