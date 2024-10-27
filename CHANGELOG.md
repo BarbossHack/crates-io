@@ -2,6 +2,10 @@
 
 All notable changes to the "crates" extension will be documented in this file.
 
+## 0.7.3
+
+- use semver library to identify pre-releases [Heliozoa](https://github.com/Heliozoa)
+
 ## 0.7.2
 
 - changed link to go straight to docs [seivan](https://github.com/seivan)

@@ -2,7 +2,7 @@
   "name": "crates-io",
   "displayName": "crates-io",
   "description": "(Fork) Helps Rust developers managing dependencies with Cargo.toml.",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "publisher": "BarbossHack",
   "author": {
     "name": "BarbossHack",
