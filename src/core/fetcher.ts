@@ -10,6 +10,7 @@ import { CompletionItem, CompletionItemKind, CompletionList, workspace } from "v
 import { sortText } from "../providers/autoCompletion";
 import { CrateMetadatas } from "../api/crateMetadatas";
 import { AlternateRegistry } from "./AlternateRegistry";
+import { prerelease } from "semver";
 
 export async function fetchCrateVersions(dependencies: Item[], alternateRegistries?: AlternateRegistry[]): Promise<[Promise<Dependency[]>, Map<string, Dependency[]>]> {
   // load config
@@ -34,7 +35,7 @@ function transformServerResponse(versions: (name: string, indexServerURL?: strin
     var thisCrateToken = item.registry !== undefined ? alternateRegistry?.token : undefined;
     return versions(item.key, thisCrateRegistry, thisCrateToken).then((crate: any) => {
       const versions = crate.versions.reduce((result: any[], item: string) => {
-        const isPreRelease = !shouldListPreRels && (item.indexOf("-alpha") !== -1 || item.indexOf("-beta") !== -1 || item.indexOf("-rc") !== -1 || item.indexOf("-pre") !== -1);
+        const isPreRelease = !shouldListPreRels && prerelease(item);
         if (!isPreRelease)
           result.push(item);
         return result;
