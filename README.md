@@ -9,10 +9,6 @@
 
 Welcome to **Crates-io**, the ultimate Rust extension for VSCode! Simplify your dependency management with ease while using Cargo.toml for your project.
 
-## Why fork ?
-
-The original extension `Crates` is now deprecated and will no longer receive updates or bug fixes. This fork adds the long-awaited `Alternate Registries` functionality, and fixes some bugs.
-
 ## Key Features
 
 Crates-io offers a range of powerful features to streamline your Rust development workflow:
