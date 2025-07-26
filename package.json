@@ -207,14 +207,14 @@
   },
   "types": "vscode",
   "devDependencies": {
-    "@types/node": "^20.14.10",
+    "@types/node": "^24.1.0",
     "@types/vscode": "^1.85.0",
-    "@types/semver": "^7.5.8",
-    "esbuild": "^0.23.0",
-    "typescript": "^5.5.3"
+    "@types/semver": "^7.7.0",
+    "esbuild": "^0.25.8",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "node-cache": "5.1.2",
-    "semver": "7.6.2"
+    "semver": "7.7.2"
   }
 }

@@ -2,10 +2,11 @@
 #
 # sudo npm install -g @vscode/vsce
 
-all: clean install build
+all: clean deps build
 
-install: clean
+deps: clean
 	@npm install
+	@npm update
 
 clean:
 	@rm -rf node_modules/ *.vsix out/ package-lock.json meta.json
