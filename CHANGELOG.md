@@ -2,6 +2,11 @@
 
 All notable changes to the "crates" extension will be documented in this file.
 
+## 0.7.4
+
+- update all dependencies
+- remove for mentions
+
 ## 0.7.3
 
 - use semver library to identify pre-releases [Heliozoa](https://github.com/Heliozoa)
