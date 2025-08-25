@@ -18,7 +18,7 @@ Crates-io offers a range of powerful features to streamline your Rust developmen
 
 2. **Shortcut Commands**: Update all dependencies with just one command for a seamless workflow.
 
-3. **Doc.rs integration**: Explore comprehensive documentation for Rust, including crates, libraries, and more, with the seamless integration of [Doc.rs](https://doc.rs/).
+3. **Docs.rs integration**: Explore comprehensive documentation for Rust, including crates, libraries, and more, with the seamless integration of [Docs.rs](https://docs.rs/).
 
 4. **Alternate registries**: Crates-io support your alternate registries without any configuration.
 
