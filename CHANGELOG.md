@@ -2,6 +2,10 @@
 
 All notable changes to the "crates" extension will be documented in this file.
 
+## 0.7.5
+
+- fix typo in docs.rs link [BaumiCoder](https://github.com/BaumiCoder)
+
 ## 0.7.4
 
 - update all dependencies
@@ -57,7 +61,7 @@ All notable changes to the "crates" extension will be documented in this file.
 - github support removed.
 - local index support removed.
 - crates-index-server support added.
-- doc.rs bug with dependency names quoted fixed.
+- docs.rs bug with dependency names quoted fixed.
 - better error messages, ui and logging.
 - dependencies updated.
 - minor bug fixes.
