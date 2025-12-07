@@ -2,6 +2,11 @@
 
 All notable changes to the "crates" extension will be documented in this file.
 
+## 0.7.6
+
+- update hover decoration
+- update all dependencies
+
 ## 0.7.5
 
 - fix typo in docs.rs link [BaumiCoder](https://github.com/BaumiCoder)
