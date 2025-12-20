@@ -67,7 +67,8 @@ export default function decoration(
     let itemName = item.key.replace(/"/g, "");
     hoverMessage.appendMarkdown(`#### ${itemName}`);
     if (item.registry === undefined) {
-      hoverMessage.appendMarkdown(` _([crates.io](https://crates.io/crates/${itemName}) / [docs.rs](https://docs.rs/${itemName}/latest/${itemName}/))_ `);
+      hoverMessage.appendMarkdown(` _([crates.io](https://crates.io/crates/${itemName}) / ` +
+        `[docs.rs](https://docs.rs/${itemName}/latest/))_ `);
     }
     hoverMessage.isTrusted = true;
 
