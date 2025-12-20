@@ -68,7 +68,7 @@ export default function decoration(
     hoverMessage.appendMarkdown(`#### ${itemName}`);
     if (item.registry === undefined) {
       hoverMessage.appendMarkdown(` _([crates.io](https://crates.io/crates/${itemName}) / ` +
-        `[docs.rs](https://docs.rs/${itemName}/latest/${itemName.replaceAll("-", "_")}/))_ `);
+        `[docs.rs](https://docs.rs/${itemName}/latest/))_ `);
     }
     hoverMessage.isTrusted = true;
 
