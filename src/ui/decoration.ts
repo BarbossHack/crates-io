@@ -38,11 +38,10 @@ export default function decoration(
   error?: string,
 ): DecorationOptions {
   // Also handle json valued dependencies
-
   const start = item.start;
   let endofline = editor.document.lineAt(editor.document.positionAt(item.end)).range.end;
   const end = item.end;
-  const version = item.value?.replace(",", "");
+  const version = item.value?.replace(",", " ");
   const [satisfies, maxSatisfying] = checkVersion(version, versions);
 
   const formatError = (error: string) => {
