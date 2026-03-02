@@ -277,7 +277,7 @@ function parseValues(data: string, parent: Item, index: number): number {
 function isCratesDep(i: Item): boolean {
   if (i.values && i.values.length) {
     for (let value of i.values) {
-      if (value.key === "git" || value.key === "path") {
+      if (value.key === "git") {
         return false;
       } else if (value.key === "package" && value.value !== undefined) {
         i.key = value.value;

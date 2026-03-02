@@ -9,11 +9,11 @@ const cache = new NodeCache({ stdTTL: 60 * 10 });
 
 function normalizeVersionRequirement(versionRequirement?: string): string | undefined {
   if (!versionRequirement) return undefined;
-  const trimmed = versionRequirement.trim();
-  if (trimmed.length === 0) return undefined;
-  const prefix = trimmed.charCodeAt(0);
-  if (prefix > 47 && prefix < 58) return "^" + trimmed;
-  return trimmed;
+  const normalized = versionRequirement.replace(/,/g, ' ').trim();
+  if (normalized.length === 0) return undefined;
+  const prefix = normalized.charCodeAt(0);
+  if (prefix > 47 && prefix < 58) return "^" + normalized;
+  return normalized;
 }
 
 function extractFeaturesFromEntry(entry: any): string[] {
@@ -79,7 +79,8 @@ export const versions = (
 ) => {
   // clean dirty names
   name = name.replace(/"/g, "");
-  const cacheKey = `${name}::${versionRequirement ?? ""}::${shouldListPreRels ? "pre" : "stable"}`;
+  const registryScope = indexServerURL?.replace(/\/$/, "") ?? "default";
+  const cacheKey = `${registryScope}::${name}::${versionRequirement ?? ""}::${shouldListPreRels ? "pre" : "stable"}`;
 
   return new Promise<CrateMetadatas>(function (resolve, reject) {
     const cached = cache.get<CrateMetadatas>(cacheKey);

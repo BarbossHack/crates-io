@@ -13,6 +13,7 @@ import {
 import tomlListener from "./core/listener";
 import TomlCommands from "./toml/commands";
 import { FeaturesCompletions, VersionCompletions } from "./providers/autoCompletion";
+import { featureDiagnosticsCollection } from "./ui/featureDiagnostics";
 
 export function activate(context: ExtensionContext) {
   const documentSelector: DocumentSelector = { language: "toml", pattern: "**/[Cc]argo.toml" };
@@ -50,7 +51,7 @@ export function activate(context: ExtensionContext) {
     languages.registerCompletionItemProvider(
       documentSelector,
       new FeaturesCompletions(),
-      "'", '"', "[", ","
+      "[", ","
     ),
   );
 
@@ -58,6 +59,7 @@ export function activate(context: ExtensionContext) {
 
   // Add commands
   context.subscriptions.push(TomlCommands.replaceVersion);
+  context.subscriptions.push(featureDiagnosticsCollection);
 }
 
 export function deactivate() { }

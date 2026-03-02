@@ -10,6 +10,10 @@ export type FeatureSourceResult = {
     features: string[];
 };
 
+export function isLocalFeatureSourceDependency(dependency: Item): boolean {
+    return dependency.path !== undefined || dependency.workspace === true;
+}
+
 function toFeatureSourceResult(features: string[]): FeatureSourceResult {
     return {
         versions: [LOCAL_FEATURES_VERSION],

@@ -11,7 +11,7 @@ import { sortText } from "../providers/autoCompletion";
 import { CrateMetadatas } from "../api/crateMetadatas";
 import { AlternateRegistry } from "./AlternateRegistry";
 import { prerelease } from "semver";
-import { resolveFeaturesForDependency } from "./featureSources";
+import { isLocalFeatureSourceDependency, resolveFeaturesForDependency } from "./featureSources";
 
 export async function fetchCrateVersions(
   dependencies: Item[],
@@ -60,7 +60,7 @@ function transformServerResponse(
   cargoTomlPath?: string
 ): (i: Item) => Promise<Dependency> {
   return async function (item: Item): Promise<Dependency> {
-    if (cargoTomlPath && (item.path !== undefined || item.workspace === true)) {
+    if (cargoTomlPath && isLocalFeatureSourceDependency(item)) {
       const localFeatures = await resolveFeaturesForDependency(item, cargoTomlPath);
       if (localFeatures) {
         return {

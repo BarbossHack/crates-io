@@ -125,16 +125,21 @@ function collectFeatureUsages(document: TextDocument): FeatureUsage[] {
 }
 
 function findDependencyForCrate(
+    document: TextDocument,
     fetchedDepsMap: Map<string, Dependency[]>,
     crate: string,
-    line: number
+    usageOffset: number
 ): Dependency | undefined {
     const deps = fetchedDepsMap.get(crate);
     if (!deps || deps.length === 0) return undefined;
     if (deps.length === 1) return deps[0];
 
     for (const dep of deps) {
-        if (dep.item.start <= line && line <= dep.item.end) {
+        const depRange = new Range(
+            document.positionAt(dep.item.start),
+            document.positionAt(dep.item.end)
+        );
+        if (depRange.contains(document.positionAt(usageOffset))) {
             return dep;
         }
     }
@@ -159,8 +164,10 @@ export function updateFeatureDiagnostics(
     const usages = collectFeatureUsages(document);
 
     usages.forEach((usage) => {
-        const dep = findDependencyForCrate(fetchedDepsMap, usage.crate, usage.range.start.line);
+        const usageOffset = document.offsetAt(usage.range.start);
+        const dep = findDependencyForCrate(document, fetchedDepsMap, usage.crate, usageOffset);
         if (!dep) return;
+        if (dep.error) return;
 
         const available = resolveAvailableFeatures(dep);
         const unknown = findUnknownFeatures(usage.selected, available);
