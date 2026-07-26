@@ -35,6 +35,7 @@ jpegxl-sys = "0.8.2"
 tracing = "=0.1.37"
 external = { version = "0.1.0", registry = "public-registry" }
 external-unknown = { version = "0.1.0", registry = "unknown-registry" }
+russh = ">0.54.0, <0.57.0"
 
 [dependencies.external2]
 registry = "private-registry"
