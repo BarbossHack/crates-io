@@ -6,6 +6,8 @@ export default class Item {
   values: Array<Item> = [];
   value: string | undefined = "";
   registry?: string;
+  path?: string;
+  workspace?: boolean;
   start: number = -1;
   end: number = -1;
   constructor(item?: Item) {
@@ -14,6 +16,8 @@ export default class Item {
       this.values = item.values;
       this.value = item.value;
       this.registry = item.registry;
+      this.path = item.path;
+      this.workspace = item.workspace;
       this.start = item.start;
       this.end = item.end;
     }

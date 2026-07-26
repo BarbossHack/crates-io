@@ -66,13 +66,13 @@ function loadPref() {
   const incompatibleDecoratorText = config.get<string>("crates.incompatibleDecorator") ?? "";
   let incompatibleDecoratorCss = config.get<DecorationInstanceRenderOptions>("crates.incompatibleDecoratorCss") ?? {};
   const errorDecoratorText = errorText ? errorText + "" : "";
-  if(compatibleDecoratorCss.after == undefined) {
+  if (compatibleDecoratorCss.after == undefined) {
     compatibleDecoratorCss.after = {}
   }
-  if(incompatibleDecoratorCss.after == undefined) {
+  if (incompatibleDecoratorCss.after == undefined) {
     incompatibleDecoratorCss.after = {}
   }
-  if(errorDecoratorCss.after == undefined) {
+  if (errorDecoratorCss.after == undefined) {
     errorDecoratorCss.after = {}
   }
   compatibleDecoratorCss.after.contentText = compatibleDecoratorText;

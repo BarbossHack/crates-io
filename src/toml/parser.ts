@@ -66,7 +66,6 @@ export function findCrateAndVersion(
 function findVersion(item: Item): Item[] {
   let dependencies: Item[] = [];
   for (const field of item.values) {
-    if (field.key.endsWith(".workspace") || field.key.endsWith(".path")) continue;
     if (field.values.length > 0) {
       const dependency = findVersionTable(field);
       if (dependency) dependencies.push(dependency);
@@ -82,17 +81,33 @@ function findVersionTable(table: Item): Item | null {
   let item = null
   let itemName = null;
   let itemRegistry = undefined;
+  let itemPath = undefined;
+  let itemWorkspace: boolean | undefined = undefined;
   for (const field of table.values) {
-    if (field.key === "workspace" || field.key === "path") return null;
     if (field.key === "version") {
       item = new Item(field);
       item.key = table.key;
     }
     if (field.key === "package") itemName = field.value;
     if (field.key === "registry") itemRegistry = field.value;
+    if (field.key === "path") itemPath = field.value;
+    if (field.key === "workspace") itemWorkspace = field.value === "true";
   }
+
+  if (!item && (itemPath !== undefined || itemWorkspace === true)) {
+    item = new Item(table);
+    item.key = table.key;
+    item.value = undefined;
+  }
+
   if (item && itemName) item.key = itemName;
   if (item && itemRegistry !== undefined) item.registry = itemRegistry;
+  if (item && itemPath !== undefined) item.path = itemPath;
+  if (item && itemWorkspace !== undefined) item.workspace = itemWorkspace;
+  if (item) {
+    item.start = table.start;
+    item.end = table.end;
+  }
   return item;
 }
 
@@ -262,7 +277,7 @@ function parseValues(data: string, parent: Item, index: number): number {
 function isCratesDep(i: Item): boolean {
   if (i.values && i.values.length) {
     for (let value of i.values) {
-      if (value.key === "git" || value.key === "path") {
+      if (value.key === "git") {
         return false;
       } else if (value.key === "package" && value.value !== undefined) {
         i.key = value.value;

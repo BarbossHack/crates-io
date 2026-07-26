@@ -2,16 +2,88 @@ import * as https from 'https';
 import * as http from 'http';
 import { CrateMetadatas } from './crateMetadatas';
 import NodeCache from "node-cache";
+import { maxSatisfying, prerelease } from "semver";
 
 export const sparseIndexServerURL = "https://index.crates.io";
 const cache = new NodeCache({ stdTTL: 60 * 10 });
 
-export const versions = (name: string, indexServerURL?: string, registryToken?: string) => {
+function normalizeVersionRequirement(versionRequirement?: string): string | undefined {
+  if (!versionRequirement) return undefined;
+  const normalized = versionRequirement.replace(/,/g, ' ').trim();
+  if (normalized.length === 0) return undefined;
+  const prefix = normalized.charCodeAt(0);
+  if (prefix > 47 && prefix < 58) return "^" + normalized;
+  return normalized;
+}
+
+function extractFeaturesFromEntry(entry: any): string[] {
+  const merged = {
+    ...(entry.features ?? {}),
+    ...(entry.features2 ?? {}),
+  };
+  return Object.keys(merged);
+}
+
+export function buildCrateMetadatasFromSparseLines(
+  name: string,
+  lines: string[],
+  versionRequirement?: string,
+  shouldListPreRels: boolean = false
+): CrateMetadatas {
+  const bodyArray: any[] = [];
+  for (const line of lines) {
+    bodyArray.push(JSON.parse(line));
+  }
+
+  const nonYanked = bodyArray.filter((e: any) => e.yanked === false);
+  const allVersions = nonYanked.map((e: any) => e.vers);
+
+  const candidateVersions = shouldListPreRels
+    ? allVersions
+    : allVersions.filter((version) => !prerelease(version));
+
+  const normalizedRequirement = normalizeVersionRequirement(versionRequirement);
+  let resolvedVersion: string | null = null;
+  const prereleaseOptions = shouldListPreRels ? { includePrerelease: true } : undefined;
+  if (normalizedRequirement) {
+    resolvedVersion = maxSatisfying(candidateVersions, normalizedRequirement, prereleaseOptions);
+    if (!resolvedVersion) {
+      resolvedVersion = maxSatisfying(allVersions, normalizedRequirement, { includePrerelease: true });
+    }
+  } else {
+    resolvedVersion = maxSatisfying(candidateVersions, "*", prereleaseOptions);
+    if (!resolvedVersion && shouldListPreRels) {
+      resolvedVersion = maxSatisfying(allVersions, "*", { includePrerelease: true });
+    }
+  }
+
+  const resolvedEntry = resolvedVersion
+    ? nonYanked.find((entry: any) => entry.vers === resolvedVersion)
+    : undefined;
+
+  const features = resolvedEntry ? extractFeaturesFromEntry(resolvedEntry) : [];
+
+  return {
+    name,
+    versions: allVersions,
+    features,
+  };
+}
+
+export const versions = (
+  name: string,
+  indexServerURL?: string,
+  registryToken?: string,
+  versionRequirement?: string,
+  shouldListPreRels: boolean = false
+) => {
   // clean dirty names
   name = name.replace(/"/g, "");
+  const registryScope = indexServerURL?.replace(/\/$/, "") ?? "default";
+  const cacheKey = `${registryScope}::${name}::${versionRequirement ?? ""}::${shouldListPreRels ? "pre" : "stable"}`;
 
   return new Promise<CrateMetadatas>(function (resolve, reject) {
-    const cached = cache.get<CrateMetadatas>(name);
+    const cached = cache.get<CrateMetadatas>(cacheKey);
     if (cached) {
       resolve(cached);
       return;
@@ -64,16 +136,8 @@ export const versions = (name: string, indexServerURL?: string, registryToken?: 
       res.on('end', function () {
         try {
           var body_lines = Buffer.concat(body).toString().split('\n').filter(n => n);
-          var body_array: any = [];
-          for (var line of body_lines) {
-            body_array.push(JSON.parse(line));
-          }
-          crate_metadatas = {
-            name: name,
-            versions: body_array.filter((e: any) => e.yanked === false).map((e: any) => e.vers),
-            features: Object.keys(body_array.at(-1).features).filter(feature => feature !== "default")
-          };
-          cache.set(name, crate_metadatas);
+          crate_metadatas = buildCrateMetadatasFromSparseLines(name, body_lines, versionRequirement, shouldListPreRels);
+          cache.set(cacheKey, crate_metadatas);
         } catch (e) {
           reject(e);
         }

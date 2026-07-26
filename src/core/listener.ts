@@ -15,6 +15,8 @@ import { homedir } from "os";
 import { promises as async_fs } from 'fs';
 import fs from 'fs';
 import { AlternateRegistry } from "./AlternateRegistry";
+import { updateFeatureDiagnostics } from "../ui/featureDiagnostics";
+import { isLocalFeatureSourceDependency } from "./featureSources";
 
 function parseToml(cargoTomlContent: string, alternateRegistries?: AlternateRegistry[]): Item[] {
   console.log("Parsing...");
@@ -99,12 +101,17 @@ export async function parseAndDecorate(
     StatusBar.setText("Loading", "Parsing Cargo.toml");
     dependencies = parseToml(cargoTomlContent, alternateRegistries);
     if (fetchDeps || !fetchedDeps || !fetchedDepsMap) {
-      const data = await fetchCrateVersions(dependencies, alternateRegistries);
+      const data = await fetchCrateVersions(dependencies, alternateRegistries, editor.document.fileName);
       fetchedDeps = await data[0];
       fetchedDepsMap = data[1];
     }
 
-    decorate(editor, fetchedDeps);
+    const depsForDecoration = fetchedDeps.filter((dep) => !isLocalFeatureSourceDependency(dep.item));
+
+    decorate(editor, depsForDecoration);
+    if (fetchedDepsMap) {
+      updateFeatureDiagnostics(editor.document, fetchedDepsMap);
+    }
     // StatusBar.setText("Info", "Done");
 
   } catch (e) {
