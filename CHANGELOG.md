@@ -2,6 +2,12 @@
 
 All notable changes to the "crates" extension will be documented in this file.
 
+## 0.7.7
+
+- fix: detect Cargo.toml in root folder too [Qualtagh](https://github.com/Qualtagh)
+- replace commas with spaces rather than deleting them [kands-code](https://github.com/kands-code)
+- update docs.rs URL generation for crates with hyphens [kands-code](https://github.com/kands-code)
+
 ## 0.7.6
 
 - update hover decoration
