@@ -34,6 +34,7 @@
   ],
   "activationEvents": [
     "onLanguage:toml",
+    "workspaceContains:Cargo.toml",
     "workspaceContains:*/Cargo.toml"
   ],
   "contributes": {
